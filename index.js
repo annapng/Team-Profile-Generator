@@ -1,69 +1,16 @@
 const inquirer = require('inquirer');
 const fs = require('fs');
+const util = require('util');
+
+const Manager = require('./classes/manager.js');
+const Engineer = require('./classes/engineer.js');
+const Intern = require('./classes/intern.js');
+const generateHTML = require('./src/generateHTML.js');
 
 
 let teamArray = []; 
 
-class Employee {
-    constructor(name, id, email){
-        this.name = name;
-        this.id = id;
-        this.email = email;
-        this.role = 'Employee';
-    }
 
-    getName() {
-        return this.name;
-    };
-    getId() {
-        return this.id;
-    };
-    getEmail() {
-        return this.email;
-    };
-    getRole() {
-        return this.role;
-    }; // Returns 'Employee'
-
-}
-
-class Manager extends Employee {
-    constructor(name, id, email, officeNumb){
-
-        super(name, id, email);
-
-        this.officeNumber = officeNumb;
-        this.role = 'Manager';
-    }
-
-
-    getRole() {
-        return this.role;
-    }; // Overridden to return 'Manager' 
-
-}
-
-class Engineer extends Employee {
-    constructor(github){
-        this.github = github;
-    }
-
-    getGitub() {}; // get github url
-    getRole() {}; // Overridden to return 'Engineer'
-
-}
-
-class Intern extends Employee {
-    constructor(school){
-        this.school = school;
-    }
-
-    getSchool() {};
-    getRole() {}; // Overridden to return 'Intern'
-
-}
-
-//make function
 function startManager() { 
 
     inquirer.prompt([
@@ -91,9 +38,75 @@ function startManager() {
         const manager = new Manager(answers.name, answers.id, answers.email, answers.officeNumb);
         teamArray.push(manager);
         console.log(teamArray);
+        anotherOne();
      })
-
 }
+
+
+function addEngineer() { 
+
+    inquirer.prompt([
+    {type: 'input',
+    message: "What is the engineer's name?",
+    name: 'name',
+    validate: (value)=>{ if(value){return true} else {return "Please provide the engineer's name."}}},
+
+    {type: 'input',
+    message: "What is their employee ID number?",
+    name: 'id',
+    validate: (value)=>{ if(value){return true} else {return "Please provide the engineer's ID number."}}},
+
+    {type: 'input',
+    message: 'What is their email address?',
+    name: 'email',
+    validate: (value)=>{ if(value){return true} else {return "Please provide the enginner's email address."}}},
+
+    {type: 'input',
+    message: 'What is their GitHub username?',
+    name: 'github',
+    validate: (value)=>{ if(value){return true} else {return "Please provide the engineer's GitHub username."}}},])
+
+    .then((answers) => {
+        const engineer = new Engineer(answers.name, answers.id, answers.email, answers.github);
+        teamArray.push(engineer);
+        console.log(teamArray);
+        anotherOne();
+     })
+}
+
+
+
+function addIntern() { 
+
+    inquirer.prompt([
+    {type: 'input',
+    message: "What is the intern's name?",
+    name: 'name',
+    validate: (value)=>{ if(value){return true} else {return "Please provide the intern's name."}}},
+
+    {type: 'input',
+    message: "What is their employee ID number?",
+    name: 'id',
+    validate: (value)=>{ if(value){return true} else {return "Please provide the intern's ID number."}}},
+
+    {type: 'input',
+    message: 'What is their email address?',
+    name: 'email',
+    validate: (value)=>{ if(value){return true} else {return "Please provide the intern's email address."}}},
+
+    {type: 'input',
+    message: 'What school do they attend?',
+    name: 'school',
+    validate: (value)=>{ if(value){return true} else {return "Please provide the school the intern attends."}}},])
+
+    .then((answers) => {
+        const intern = new Intern(answers.name, answers.id, answers.email, answers.school);
+        teamArray.push(intern);
+        console.log(teamArray);
+        anotherOne();
+     })
+}
+
 
 function anotherOne () {
     inquirer.prompt([
@@ -102,39 +115,48 @@ function anotherOne () {
     name: 'another',
     choices: ['Manager', 'Engineer', 'Intern', 'No, create my page!']},])
 
-    .then((answer) => {
+    .then((answers) => {
         if (answers.another === 'Manager') {
-           // function 
-        }
-        else if (answers.another === 'Engineer') {
+            startManager();  }
 
-        }
         else if (answers.another === 'Engineer') {
-            
+            addEngineer();   }
+        else if (answers.another === 'Intern') {
+            addIntern();
         }
         else {
-            // create functions
+            // creation functions
+           // console.log(teamArray);
+            creation(teamArray);
         }
-    } 
-    )
-
-
+    })
 }
 
+
+function creation() {
+
+    const data = generateHTML(teamArray);
+    writeFileAsync('yourTeam.html', data);
+}
+
+
+function writeToFile(fileName, data) {
+    fs.writeFile(fileName, data, err => { if (err) {
+        return console.log(err);
+    }
+    
+    console.log("Congratulations! Your file is created!")   });
+}
+
+
+const writeFileAsync = util.promisify(writeToFile);
 
 
 // Function to initialize app
 async function init() {
-
     console.log("Welcome to the Team Profile Generator!");
-
     startManager();
-
-
-
-
 }
-
 
 
 // Function call to initialize app
