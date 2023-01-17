@@ -10,6 +10,11 @@ class Engineer extends Employee {
 
     // GitHub URL is retrieved within the card creator in generateHTML.js
 
+    getGithub() {
+        return this.github;
+    };
+
+
     getRole() {
         return this.role;
     }; // Overridden to return 'Engineer'

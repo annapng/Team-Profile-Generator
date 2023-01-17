@@ -1,6 +1,6 @@
 function managerCard(manager) {
 
-    return `<div class="card" style="width: 18rem;">
+    return `<div class="card text-center" style="width: 18rem;">
         <div class="card-body">
         <h5 class="card-title">Manager</h5>
         <h6 class="card-subtitle mb-2 text-muted">${manager.name}</h6>
@@ -13,7 +13,7 @@ function managerCard(manager) {
 
 function engineerCard(engineer) {
 
-    return `<div class="card" style="width: 18rem;">
+    return `<div class="card text-center" style="width: 18rem;">
     <div class="card-body">
     <h5 class="card-title">Engineer</h5>
     <h6 class="card-subtitle mb-2 text-muted">${engineer.name}</h6>
@@ -27,7 +27,7 @@ function engineerCard(engineer) {
 
 function internCard(intern) {
 
-    return `<div class="card" style="width: 18rem;">
+    return `<div class="card text-center" style="width: 18rem;">
     <div class="card-body">
     <h5 class="card-title">Intern</h5>
     <h6 class="card-subtitle mb-2 text-muted">${intern.name}</h6>
@@ -83,12 +83,11 @@ function HTMLbase(employeeCards) {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
 </head>
 <body>
-<header>
-
-
+<header class="header">
+Team Profile Generator
 </header>
 <main>
-    <div class="container">
+    <div class="container card-group">
 
         ${employeeCards}
 

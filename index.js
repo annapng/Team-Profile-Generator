@@ -141,7 +141,7 @@ function creation() {
 
 
 function writeToFile(fileName, data) {
-    fs.writeFile(fileName, data, err => { if (err) {
+    fs.writeFile(`./dist/output/${fileName}`, data, err => { if (err) {
         return console.log(err);
     }
     
