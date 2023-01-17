@@ -37,7 +37,6 @@ function startManager() {
     .then((answers) => {
         const manager = new Manager(answers.name, answers.id, answers.email, answers.officeNumb);
         teamArray.push(manager);
-        console.log(teamArray);
         anotherOne();
      })
 }
@@ -69,7 +68,6 @@ function addEngineer() {
     .then((answers) => {
         const engineer = new Engineer(answers.name, answers.id, answers.email, answers.github);
         teamArray.push(engineer);
-        console.log(teamArray);
         anotherOne();
      })
 }
@@ -102,7 +100,6 @@ function addIntern() {
     .then((answers) => {
         const intern = new Intern(answers.name, answers.id, answers.email, answers.school);
         teamArray.push(intern);
-        console.log(teamArray);
         anotherOne();
      })
 }
@@ -125,8 +122,6 @@ function anotherOne () {
             addIntern();
         }
         else {
-            // creation functions
-           // console.log(teamArray);
             creation(teamArray);
         }
     })
